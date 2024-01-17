@@ -14,11 +14,7 @@ export const fetchData = createAsyncThunk("user/fetchData", async () => {
 });
 
 export const postData = createAsyncThunk("user/postData", async (obj) => {
-  const response = await axios
-    .post(`http://localhost:8000/api`, object)
-    .then((res) => {
-      return res.data;
-    });
+  const response = await axios.post(`http://localhost:8000/api`, obj);
   return response.data;
 });
 
