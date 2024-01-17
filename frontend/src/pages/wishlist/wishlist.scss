@@ -1,0 +1,44 @@
+.our-menu-sect {
+  width: 100%;
+  background-color: #fafafa;
+  .container {
+    width: 65%;
+    padding: 80px;
+    .menu-intro {
+      font-size: 13px;
+      color: lightgray;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+    }
+    h1 {
+      margin-top: 10px;
+      color: rgb(64, 64, 68);
+      text-align: center;
+      margin-bottom: 80px;
+      font-size: 43px;
+      line-height: 50px;
+    }
+
+    .choose-menu {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 50px;
+      .menu-tpe-item {
+        width: 150px;
+        height: 70px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0px;
+        color: #aeaeb3;
+        svg {
+          margin: 10px;
+        }
+      }
+    }
+  }
+}

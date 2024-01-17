@@ -1,0 +1,39 @@
+.hero {
+  width: 100%;
+  height: 100vh;
+  background-image: url("./../../assets/bg_1.jpg");
+  opacity: 2;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+
+  .container {
+    z-index: 3;
+    position: absolute;
+    width: 65%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    ul {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      gap: 20px;
+      color: white;
+      text-decoration: underline;
+      margin-bottom: 20px;
+      li {
+        list-style: none;
+      }
+    }
+    h1 {
+      font-style: 170px;
+      list-style: none;
+      color: white;
+    }
+  }
+}
