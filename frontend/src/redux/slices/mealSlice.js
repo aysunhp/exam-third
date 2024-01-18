@@ -7,19 +7,19 @@ import {
 import axios from "axios";
 
 export const fetchData = createAsyncThunk("user/fetchData", async () => {
-  const response = await axios.get(`http://localhost:8000/api`).then((res) => {
+  const response = await axios.get(`http://localhost:3003/api`).then((res) => {
     return res.data;
   });
   return response;
 });
 
 export const postData = createAsyncThunk("user/postData", async (obj) => {
-  const response = await axios.post(`http://localhost:8000/api`, obj);
+  const response = await axios.post(`http://localhost:3003/api`, obj);
   return response.data;
 });
 
 export const deleteData = createAsyncThunk("user/deleteData", async (id) => {
-  const response = await axios.delete(`http://localhost:8000/api/` + id);
+  const response = await axios.delete(`http://localhost:3003/api/` + id);
   return response.data;
 });
 

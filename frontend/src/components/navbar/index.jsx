@@ -6,14 +6,30 @@ const Navbar = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (location.pathname === "/" && window.scrollY >= 600) {
-        setBackground("#404044");
-      } else {
-        setBackground("transparent");
-      }
-    };
+    console.log("deyisdi")
+   
 
+    if(location.pathname!=="/"){
+      setBackground("#404044");
+    }
+
+    if(location.pathname=="/"){
+      const handleScroll = () => {
+        if (location.pathname === "/" && window.scrollY >= 600) {
+          setBackground("#404044");
+        } else {
+          setBackground("transparent");
+        }
+      };
+
+      window.addEventListener("scroll", handleScroll);
+
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+
+    
     const updateBackground = () => {
       if (location.pathname === "/") {
         setBackground("transparent");
@@ -22,12 +38,10 @@ const Navbar = () => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+   
     updateBackground();
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    
   }, [location]);
   console.log(background);
   return (

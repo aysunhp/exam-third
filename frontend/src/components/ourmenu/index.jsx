@@ -26,10 +26,12 @@ import Button from "@mui/material/Button";
 const OurMenu = () => {
   const data = useSelector((state) => state.meal.data);
   const wishlist = useSelector((state) => state.meal.wishlist);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchData());
+  
   }, []);
 
   console.log(data);
