@@ -17,6 +17,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { useDispatch, useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
 
 const Wishlist = () => {
   const wishlist = useSelector((state) => state.meal.wishlist);
@@ -29,6 +30,11 @@ const Wishlist = () => {
   return (
     <>
       <div className="our-menu-sect">
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Wishlist</title>
+          <link rel="canonical" href="http://mysite.com/example" />
+        </Helmet>
         <div className="container">
           <h1>Wishlist</h1>
 

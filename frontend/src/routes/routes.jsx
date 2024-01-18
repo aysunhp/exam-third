@@ -9,6 +9,7 @@ import Contact from "../pages/Contact";
 import Menu from "../pages/Menu";
 import Reservation from "../pages/Reservation";
 import Specialist from "../pages/Specialist";
+import Detail from "../pages/detail";
 
 const routes = [
   {
@@ -18,6 +19,10 @@ const routes = [
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/:id",
+        element: <Detail />,
       },
       {
         path: "/add",

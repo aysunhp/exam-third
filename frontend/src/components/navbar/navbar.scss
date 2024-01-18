@@ -2,14 +2,15 @@
 
 nav {
   width: 100%;
-  height: 50px;
+  height: 80px;
   padding: 25px;
   margin-bottom: 20px;
   position: fixed;
   top: 0px;
   left: 0px;
-
+  z-index: 3;
   color: $basic-color;
+
   .container {
     width: 65%;
     display: flex;
@@ -41,4 +42,18 @@ nav {
       }
     }
   }
+}
+
+.swiper-button-prev {
+  color: transparent !important;
+}
+.swiper-button-next {
+  color: transparent !important;
+}
+.swiper:hover .swiper-button-prev {
+  color: white !important;
+}
+
+.swiper:hover .swiper-button-next {
+  color: white !important;
 }

@@ -32,7 +32,26 @@ export const mealSlice = createSlice({
   },
   reducers: {
     addBasket: (state, action) => {
-      state.basket = 1;
+      let foundIndex = state.basket.findIndex(item => item._id == action.payload._id)
+
+      if (foundIndex !== -1) {
+        state.basket = current(state.basket).map((item, index) => index == foundIndex ? { ...item, quantity: item.quantity + 1 } : item)
+      } else {
+        state.basket = [...current(state.basket), { ...action.payload, quantity: 1 }];
+      }
+    },
+    increaseBasket: (state, action) => {
+      let foundIndex = state.basket.findIndex(item => item._id == action.payload._id)
+      state.basket = current(state.basket).map((item, index) => index == foundIndex ? { ...item, quantity: item.quantity + 1 } : item)
+    },
+    decreaseBasket: (state, action) => {
+      let foundIndex = state.basket.findIndex(item => item._id == action.payload._id)
+      state.basket = current(state.basket).map((item, index) => index == foundIndex ? { ...item, quantity: item.quantity - 1 } : item)
+    },
+    deleteBasket: (state, action) => {
+      state.basket = current(state.basket).filter(
+        (item) => item._id != action.payload
+      );
     },
     addWishlist: (state, action) => {
       let found = state.wishlist.find((item) => item._id == action.payload._id);
@@ -98,6 +117,6 @@ export const mealSlice = createSlice({
   },
 });
 
-export const { addBasket, addWishlist, deleteWishlist } = mealSlice.actions;
+export const { addBasket, addWishlist, deleteWishlist, increaseBasket, decreaseBasket, deleteBasket } = mealSlice.actions;
 
 export default mealSlice.reducer;

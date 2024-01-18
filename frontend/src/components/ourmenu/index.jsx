@@ -6,17 +6,22 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import { useTheme } from "@mui/material/styles";
-import { fetchData, addWishlist } from "../../redux/slices/mealSlice";
+import {
+  fetchData,
+  addWishlist,
+  addBasket,
+} from "../../redux/slices/mealSlice";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 const OurMenu = () => {
   const data = useSelector((state) => state.meal.data);
@@ -145,12 +150,18 @@ const OurMenu = () => {
                                 </Typography>
                               </Grid>
                               <Grid item xs={6}>
-                                {" "}
                                 <Typography component="div" variant="h4">
-                                  <ShoppingBasketIcon />
+                                  <ShoppingBasketIcon
+                                    onClick={() => {
+                                      dispatch(addBasket(item));
+                                    }}
+                                  />
                                 </Typography>
                               </Grid>
                             </Grid>
+                            <Link to={"/" + item._id}>
+                              <Button>View</Button>
+                            </Link>
                           </CardContent>
                         </Box>
                       </Card>

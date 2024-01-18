@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -13,6 +13,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import TextField from "@mui/material/TextField";
 import "./add.scss";
+import { Helmet } from "react-helmet";
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
@@ -23,32 +24,41 @@ const SignupSchema = Yup.object().shape({
     .min(2, "Too Short!")
     .max(50, "Too Long!")
     .required("Required"),
-  type: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  image: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  price: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
+  type: Yup.string().min(8, "Too Short!").required("Required"),
+  image: Yup.string().min(2, "Too Short!").required("Required"),
+  price: Yup.number().positive().required("Required"),
 });
 
 const Add = () => {
+  const [search, setSearch] = useState("");
+  const [type, setType] = useState("");
   const data = useSelector((state) => state.meal.data);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchData());
-  }, []);
-  console.log(data);
+  }, [dispatch]);
+
+  const searchedData = () => {
+    if (type == "az") {
+      return [...data].sort((a, b) => a.name.localeCompare(b.name));
+    } else if (type == "za") {
+      return [...data].sort((a, b) => b.name.localeCompare(a.name));
+    } else {
+      return [...data].sort((a, b) => a.price - b.price);
+    }
+
+    return data;
+  };
 
   return (
     <>
       <div className="add">
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Add</title>
+          <link rel="canonical" href="http://mysite.com/example" />
+        </Helmet>
         <h1>Add New Meal</h1>
         <div className="form">
           <Formik
@@ -59,7 +69,7 @@ const Add = () => {
               type: "",
               image: "",
             }}
-            // validationSchema={SignupSchema}
+            validationSchema={SignupSchema}
             onSubmit={(values) => {
               console.log(values);
               dispatch(postData(values));
@@ -102,6 +112,38 @@ const Add = () => {
             )}
           </Formik>
         </div>
+
+        <div className="search">
+          <TextField
+            placeholder="Search"
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
+
+          <Button
+            onClick={() => {
+              setType("az");
+            }}
+          >
+            A-Z
+          </Button>
+          <Button
+            onClick={() => {
+              setType("za");
+            }}
+          >
+            Z-A
+          </Button>
+          <Button
+            onClick={() => {
+              setType("");
+            }}
+          >
+            PRICE
+          </Button>
+        </div>
+
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -114,30 +156,34 @@ const Add = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((row) => (
-                <TableRow
-                  key={row._id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.ingredients}</TableCell>
-                  <TableCell align="right">{row.price}</TableCell>
-                  <TableCell align="right">{row.type}</TableCell>
-                  <TableCell align="right">
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      onClick={() => {
-                        dispatch(deleteData(row._id));
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {searchedData()
+                .filter((item) =>
+                  item.name.toLowerCase().includes(search.toLowerCase())
+                )
+                .map((row) => (
+                  <TableRow
+                    key={row._id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.name}
+                    </TableCell>
+                    <TableCell align="right">{row.ingredients}</TableCell>
+                    <TableCell align="right">{row.price}</TableCell>
+                    <TableCell align="right">{row.type}</TableCell>
+                    <TableCell align="right">
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        onClick={() => {
+                          dispatch(deleteData(row._id));
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
